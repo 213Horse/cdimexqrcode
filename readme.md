@@ -37,8 +37,9 @@
 
 ```
 qr/
-├── index.html          # Trang chính - URL QR Code
-├── wifi.html           # Trang WiFi QR Code
+├── index.html          # Trang chính - Landing page chọn chức năng
+├── url-qr.html         # Trang URL QR Code Generator
+├── wifi.html           # Trang WiFi QR Code Generator
 ├── js/
 │   ├── script.js       # Logic cho URL QR Code
 │   └── wifi.js         # Logic cho WiFi QR Code

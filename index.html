@@ -5,9 +5,9 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Generate a QR code image to point to a website URL" />
+  <meta name="description" content="CDIMEX QR Code Generator - Tạo QR code cho URL và WiFi" />
   <meta name="keywords"
-    content="qr code, qr codes, qrcodes, create qr code, qr code generator, create qrcodes, make a qr code, online qr code" />
+    content="qr code, qr codes, qrcodes, create qr code, qr code generator, wifi qr code, wifi connection" />
   <link rel="shortcut icon" type="image/x-icon" href="/img/logocdimex-removebg-preview.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -24,82 +24,189 @@
       },
     };
   </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
-    integrity="sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAUSHSQX0FslNhTDadL4O5SAGapGt4FodqL8My0mA=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script src="js/script.js" defer></script>
   <style>
-    #spinner {
-      display: none;
+    .card-hover {
+      transition: all 0.3s ease;
+    }
+
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    .gradient-bg {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     }
   </style>
   <title>CDIMEX QR Code Generator</title>
 </head>
 
-<body>
-  <header class="p-4 mb-10 bg-blue-500">
-    <div class="max-w-5xl m-auto">
-      <div class="flex items-center justify-between">
-        <div class="text-xl font-bold text-white">CDIMEX QR Code Generator</div>
-        <a href="wifi.html" class="text-white hover:text-gray-200 text-sm underline">Chức năng tạo QR tự động đăng nhập
-          cho wifi →</a>
+<body class="bg-gray-50">
+  <header class="gradient-bg p-6 mb-10">
+    <div class="max-w-6xl m-auto">
+      <div class="flex items-center justify-center">
+        <img src="img/logocdimex-removebg-preview.png" alt="CDIMEX Logo" class="w-16 h-16 mr-4" />
+        <div class="text-center">
+          <h1 class="text-3xl font-bold text-white mb-2">CDIMEX QR Code Generator</h1>
+          <p class="text-blue-100">Chọn chức năng bạn muốn sử dụng</p>
+        </div>
       </div>
     </div>
   </header>
-  <img src="img/spinner.svg" alt="" />
-  <main>
-    <div class="flex flex-col-reverse align-center justify-center m-auto md:max-w-4xl p-10 md:flex-row">
-      <div class="w-full md:w-2/3 mr-24">
-        <h1 class="text-3xl font-bold mb-5 md:text-4xl">CDIMEX QR Code Generator</h1>
-        <p class="mb-4">
-          Chức năng QR này sẽ chỉ lấy thông tin từ URL bạn nhập vào và tạo ra mã QR.
-        </p>
-        <p>
-          Enter your URL below to generate a QR Code and download the image.
-        </p>
 
-        <form id="generate-form" class="mt-4">
-          <input id="url" type="url" placeholder="Enter a URL"
-            class="w-full border-2 border-gray-200 rounded p-3 text-grey-dark mr-2 focus:outline-none mb-5" required />
+  <main class="max-w-6xl m-auto px-6">
+    <div class="grid md:grid-cols-2 gap-8 mb-10">
+      <!-- URL QR Code Card -->
+      <div class="bg-white rounded-2xl shadow-lg card-hover overflow-hidden">
+        <div class="p-8">
+          <div class="flex items-center mb-6">
+            <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mr-4">
+              <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd"
+                  d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5a2 2 0 11-2.828 2.828l-1.5 1.5a4 4 0 105.656 5.656l1.5-1.5a1 1 0 011.414 1.414l-1.5 1.5a4 4 0 01-5.656 0 2 2 0 10-2.828 2.828l1.5 1.5a1 1 0 11-1.414 1.414l-1.5-1.5a4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l3-3a4 4 0 015.656 0 1 1 0 001.414-1.414 2 2 0 01-2.828 0l-3 3a2 2 0 11-2.828-2.828l3-3a2 2 0 012.828 0z"
+                  clip-rule="evenodd"></path>
+              </svg>
+            </div>
+            <div>
+              <h2 class="text-2xl font-bold text-gray-800">URL QR Code</h2>
+              <p class="text-gray-600">Tạo QR code cho website</p>
+            </div>
+          </div>
 
-          <select class="w-full border-2 border-gray-200 rounded p-3 text-grey-dark mr-2 focus:outline-none" name="size"
-            id="size">
-            <option value="100">100x100</option>
-            <option value="200">200x200</option>
-            <option value="300" selected>300x300</option>
-            <option value="400">400x400</option>
-            <option value="500">500x500</option>
-            <option value="600">600x600</option>
-            <option value="700">700x700</option>
-          </select>
-          <button class="bg-gray-600 rounded w-full text-white py-3 px-4 mt-5 hover:bg-black" type="submit">
-            Generate QR Code
-          </button>
-        </form>
+          <div class="space-y-4 mb-6">
+            <div class="flex items-center text-sm text-gray-600">
+              <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clip-rule="evenodd"></path>
+              </svg>
+              Tạo QR code từ URL website
+            </div>
+            <div class="flex items-center text-sm text-gray-600">
+              <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clip-rule="evenodd"></path>
+              </svg>
+              Tùy chỉnh kích thước QR code
+            </div>
+            <div class="flex items-center text-sm text-gray-600">
+              <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clip-rule="evenodd"></path>
+              </svg>
+              Tải xuống dưới dạng hình ảnh PNG
+            </div>
+          </div>
+
+          <a href="url-qr.html"
+            class="block w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold py-3 px-6 rounded-lg text-center transition-all duration-200">
+            Tạo URL QR Code
+          </a>
+        </div>
       </div>
-      <div class="w-full md:w-1/3 self-center">
-        <img class="w-1/2 m-auto mb-10 md:w-full" src="img/logocdimex-removebg-preview.png" alt="" />
+
+      <!-- WiFi QR Code Card -->
+      <div class="bg-white rounded-2xl shadow-lg card-hover overflow-hidden">
+        <div class="p-8">
+          <div class="flex items-center mb-6">
+            <div class="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center mr-4">
+              <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd"
+                  d="M17.778 8.222c-4.296-4.296-11.26-4.296-15.556 0A1 1 0 014.575 9.63c3.55-3.55 9.305-3.55 12.855 0a1 1 0 01-1.414 1.414zM15.657 7.343A7.975 7.975 0 006.343 16.657a1 1 0 11-1.414-1.414 5.975 5.975 0 018.486 0 1 1 0 01-1.414 1.414zM13.414 9.586a3.975 3.975 0 00-5.656 0 1 1 0 01-1.414-1.414 5.975 5.975 0 018.486 0 1 1 0 01-1.414 1.414zM9 10a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z"
+                  clip-rule="evenodd"></path>
+              </svg>
+            </div>
+            <div>
+              <h2 class="text-2xl font-bold text-gray-800">WiFi QR Code</h2>
+              <p class="text-gray-600">Tự động kết nối WiFi</p>
+            </div>
+          </div>
+
+          <div class="space-y-4 mb-6">
+            <div class="flex items-center text-sm text-gray-600">
+              <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clip-rule="evenodd"></path>
+              </svg>
+              Tự động kết nối khi quét QR code
+            </div>
+            <div class="flex items-center text-sm text-gray-600">
+              <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clip-rule="evenodd"></path>
+              </svg>
+              Hỗ trợ WPA, WEP, và WiFi không mật khẩu
+            </div>
+            <div class="flex items-center text-sm text-gray-600">
+              <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clip-rule="evenodd"></path>
+              </svg>
+              Hỗ trợ WiFi ẩn (Hidden SSID)
+            </div>
+          </div>
+
+          <a href="wifi.html"
+            class="block w-full bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white font-bold py-3 px-6 rounded-lg text-center transition-all duration-200">
+            Tạo WiFi QR Code
+          </a>
+        </div>
       </div>
     </div>
 
-    <div id="generated" class="max-w-5xl m-auto flex flex-col text-center align-center justify-center mt-20">
-      <!-- Spinner -->
-      <div id="spinner" role="status">
-        <svg class="inline mr-2 w-24 h-24 text-gray-200 animate-spin dark:text-gray-600 fill-pink-600"
-          viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-            fill="currentColor" />
-          <path
-            d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-            fill="currentFill" />
-        </svg>
-        <span class="sr-only">Loading...</span>
+    <!-- Features Section -->
+    <div class="bg-white rounded-2xl shadow-lg p-8 mb-10">
+      <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Tại sao chọn CDIMEX QR Code Generator?</h2>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="text-center">
+          <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd"
+                d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                clip-rule="evenodd"></path>
+            </svg>
+          </div>
+          <h3 class="font-semibold text-gray-800 mb-2">Dễ sử dụng</h3>
+          <p class="text-gray-600 text-sm">Giao diện đơn giản, thân thiện với người dùng</p>
+        </div>
+        <div class="text-center">
+          <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd"
+                d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                clip-rule="evenodd"></path>
+            </svg>
+          </div>
+          <h3 class="font-semibold text-gray-800 mb-2">Chất lượng cao</h3>
+          <p class="text-gray-600 text-sm">QR code rõ nét, dễ quét và tương thích mọi thiết bị</p>
+        </div>
+        <div class="text-center">
+          <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-6 h-6 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+          <h3 class="font-semibold text-gray-800 mb-2">Miễn phí</h3>
+          <p class="text-gray-600 text-sm">Hoàn toàn miễn phí, không cần đăng ký</p>
+        </div>
       </div>
-
-      <div id="qrcode" class="m-auto"></div>
     </div>
   </main>
+
+  <footer class="bg-gray-800 text-white py-8 mt-20">
+    <div class="max-w-6xl m-auto px-6 text-center">
+      <div class="flex items-center justify-center mb-4">
+        <img src="img/logocdimex-removebg-preview.png" alt="CDIMEX Logo" class="w-8 h-8 mr-2" />
+        <span class="font-bold">CDIMEX</span>
+      </div>
+      <p class="text-gray-300">© 2025 CDIMEX - QR Code Generator. Tất cả quyền được bảo lưu.</p>
+    </div>
+  </footer>
 </body>
 
 </html>
