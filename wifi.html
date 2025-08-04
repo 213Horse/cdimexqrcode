@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Generate WiFi QR code for automatic connection" />
+  <meta name="keywords"
+    content="wifi qr code, wifi qr, qr code wifi, wifi connection, qr code generator, wifi password" />
+  <link rel="shortcut icon" type="image/x-icon" href="/img/logocdimex-removebg-preview.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ["Poppins", "sans-serif"],
+          },
+        },
+      },
+    };
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
+    integrity="sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAUSHSQX0FslNhTDadL4O5SAGapGt4FodqL8My0mA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="js/wifi.js" defer></script>
+  <style>
+    #spinner {
+      display: none;
+    }
+    .wifi-icon {
+      background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+    }
+  </style>
+  <title>CDIMEX WiFi QR Code Generator</title>
+</head>
+
+<body>
+  <header class="p-4 mb-10 bg-gradient-to-r from-blue-500 to-purple-600">
+    <div class="max-w-5xl m-auto">
+      <div class="flex items-center justify-between">
+        <div class="text-xl font-bold text-white">CDIMEX WiFi QR Code Generator</div>
+        <a href="index.html" class="text-white hover:text-gray-200 text-sm underline">← Back to URL QR</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="flex flex-col-reverse align-center justify-center m-auto md:max-w-4xl p-10 md:flex-row">
+      <div class="w-full md:w-2/3 mr-24">
+        <div class="flex items-center mb-5">
+          <div class="wifi-icon w-12 h-12 rounded-full flex items-center justify-center mr-4">
+            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M17.778 8.222c-4.296-4.296-11.26-4.296-15.556 0A1 1 0 014.575 9.63c3.55-3.55 9.305-3.55 12.855 0a1 1 0 01-1.414 1.414zM15.657 7.343A7.975 7.975 0 006.343 16.657a1 1 0 11-1.414-1.414 5.975 5.975 0 018.486 0 1 1 0 01-1.414 1.414zM13.414 9.586a3.975 3.975 0 00-5.656 0 1 1 0 01-1.414-1.414 5.975 5.975 0 018.486 0 1 1 0 01-1.414 1.414zM9 10a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"></path>
+            </svg>
+          </div>
+          <h1 class="text-3xl font-bold md:text-4xl">WiFi QR Code Generator</h1>
+        </div>
+        <p class="mb-4 text-gray-600">
+          Tạo QR code cho WiFi của bạn. Khi quét, điện thoại sẽ tự động kết nối vào WiFi với mật khẩu đã cấu hình.
+        </p>
+        <p class="text-sm text-gray-500 mb-6">
+          Hỗ trợ các loại bảo mật: WPA, WEP, và không bảo mật (Open)
+        </p>
+
+        <form id="wifi-form" class="mt-4 space-y-4">
+          <div>
+            <label for="ssid" class="block text-sm font-medium text-gray-700 mb-2">Tên WiFi (SSID)</label>
+            <input id="ssid" type="text" placeholder="Nhập tên WiFi của bạn"
+              class="w-full border-2 border-gray-200 rounded-lg p-3 text-gray-700 focus:outline-none focus:border-blue-500" required />
+          </div>
+
+          <div>
+            <label for="password" class="block text-sm font-medium text-gray-700 mb-2">Mật khẩu WiFi</label>
+            <input id="password" type="password" placeholder="Nhập mật khẩu WiFi"
+              class="w-full border-2 border-gray-200 rounded-lg p-3 text-gray-700 focus:outline-none focus:border-blue-500" />
+            <p class="text-xs text-gray-500 mt-1">Để trống nếu WiFi không có mật khẩu</p>
+          </div>
+
+          <div>
+            <label for="encryption" class="block text-sm font-medium text-gray-700 mb-2">Loại bảo mật</label>
+            <select id="encryption" 
+              class="w-full border-2 border-gray-200 rounded-lg p-3 text-gray-700 focus:outline-none focus:border-blue-500">
+              <option value="WPA">WPA/WPA2/WPA3 (Khuyến nghị)</option>
+              <option value="WEP">WEP (Cũ)</option>
+              <option value="nopass">Không bảo mật (Open)</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="hidden" class="flex items-center">
+              <input id="hidden" type="checkbox" class="mr-2 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+              <span class="text-sm font-medium text-gray-700">WiFi ẩn (Hidden SSID)</span>
+            </label>
+          </div>
+
+          <div>
+            <label for="size" class="block text-sm font-medium text-gray-700 mb-2">Kích thước QR Code</label>
+            <select id="size" 
+              class="w-full border-2 border-gray-200 rounded-lg p-3 text-gray-700 focus:outline-none focus:border-blue-500">
+              <option value="200">200x200</option>
+              <option value="300" selected>300x300</option>
+              <option value="400">400x400</option>
+              <option value="500">500x500</option>
+              <option value="600">600x600</option>
+            </select>
+          </div>
+
+          <button class="bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg w-full text-white py-3 px-4 mt-5 hover:from-blue-600 hover:to-purple-700 transition-all duration-200 font-medium" type="submit">
+            <svg class="inline w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"></path>
+            </svg>
+            Tạo WiFi QR Code
+          </button>
+        </form>
+      </div>
+      <div class="w-full md:w-1/3 self-center">
+        <img class="w-1/2 m-auto mb-10 md:w-full" src="img/logocdimex-removebg-preview.png" alt="" />
+      </div>
+    </div>
+
+    <div id="generated" class="max-w-5xl m-auto flex flex-col text-center align-center justify-center mt-20">
+      <!-- Spinner -->
+      <div id="spinner" role="status">
+        <svg class="inline mr-2 w-24 h-24 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+          viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+            fill="currentColor" />
+          <path
+            d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+            fill="currentFill" />
+        </svg>
+        <span class="sr-only">Loading...</span>
+      </div>
+
+      <div id="qrcode" class="m-auto"></div>
+      
+      <div id="wifi-info" class="mt-4 p-4 bg-blue-50 rounded-lg max-w-md mx-auto hidden">
+        <h3 class="font-semibold text-blue-800 mb-2">Thông tin WiFi</h3>
+        <div class="text-sm text-blue-700">
+          <p><strong>SSID:</strong> <span id="wifi-ssid"></span></p>
+          <p><strong>Bảo mật:</strong> <span id="wifi-encryption"></span></p>
+          <p><strong>Trạng thái:</strong> <span id="wifi-hidden"></span></p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="mt-20 p-4 text-center text-gray-500 text-sm">
+    <p>© 2024 CDIMEX - WiFi QR Code Generator</p>
+  </footer>
+</body>
+
+</html> 
